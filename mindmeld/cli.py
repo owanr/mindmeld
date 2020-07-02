@@ -117,7 +117,8 @@ def run_server(ctx, port, no_debug, reloader):
     is_flag=True,
     help="Print the full metrics instead of just accuracy.",
 )
-def converse(ctx, context, verbose):
+@click.option("--greeting", help="String for initial greeting")
+def converse(ctx, context, verbose, greeting):
     """
     Starts a conversation with the app.
     When the verbose flag is set to true, the confidences are included 
@@ -143,6 +144,9 @@ def converse(ctx, context, verbose):
             return
 
         convo = Conversation(app=app, context=context, verbose=verbose)
+
+        if (greeting):
+            click.secho('\nApp: ' + greeting)
 
         while True:
             message = click.prompt("You")
